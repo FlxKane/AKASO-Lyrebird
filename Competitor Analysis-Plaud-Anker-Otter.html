@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竞品调研 · 七款 AI 记录产品 — 会员权益、云端保存与免费额度</title>
+<style>
+:root {
+  color-scheme: light;
+
+  /* 中性色：带极轻微冷偏，避免纯灰的无选择感 */
+  --ground:   #ffffff;
+  --panel:    #f7f8fa;
+  --panel-2:  #eef1f6;
+  --rule:     #e2e6ed;
+  --rule-2:   #cfd5e0;
+  --ink:      #14181f;
+  --ink-2:    #4d5665;
+  --ink-3:    #858e9e;
+
+  /* 文档结构色 */
+  --accent:   #3b5bdb;
+  --accent-w: #eef1fd;
+
+  /* 三个调研对象的识别色（语义用途：跨章节追踪同一主体） */
+  --plaud:    #0f766e;
+  --plaud-w:  #e6f4f2;
+  --feishu:   #3b5bdb;
+  --feishu-w: #eef1fd;
+  --otter:    #9a4708;
+  --otter-w:  #fbf0e1;
+  --xunfei:   #b0203c;
+  --xunfei-w: #fdecef;
+  --pocket:   #2f6b3f;
+  --pocket-w: #eaf3ec;
+  --anker:    #6d28d9;
+  --anker-w:  #f1ebfd;
+  --looki:    #334155;
+  --looki-w:  #eef1f5;
+
+  --sans: "PingFang SC", "HarmonyOS Sans SC", "Source Han Sans SC",
+          "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono",
+          Consolas, "Liberation Mono", monospace;
+
+  --measure: 74ch;
+  --wide: 1100px;
+}
+
+/* 用户指定白底明亮阅读：单主题提交，切换到暗色偏好时仍保持浅色 */
+:root[data-theme="dark"], :root[data-theme="light"] { color-scheme: light; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--sans);
+  background: var(--ground);
+  color: var(--ink);
+  line-height: 1.78;
+  font-size: 15.5px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============ 布局骨架 ============ */
+.wrap { max-width: var(--wide); margin: 0 auto; padding: 0 28px 100px; }
+
+.stack   { display: flex; flex-direction: column; gap: 18px; }
+.stack-l { display: flex; flex-direction: column; gap: 32px; }
+
+/* ============ 页眉 ============ */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  padding: 56px 0 34px;
+  margin-bottom: 44px;
+}
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 18px;
+}
+.masthead h1 {
+  font-size: clamp(28px, 4.2vw, 40px);
+  line-height: 1.24;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin-bottom: 16px;
+}
+.masthead .lede {
+  font-size: 17px;
+  color: var(--ink-2);
+  max-width: 62ch;
+  line-height: 1.7;
+}
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.meta-row b { color: var(--ink-2); font-weight: 600; }
+
+/* ============ 目录 ============ */
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 52px;
+}
+.toc a {
+  font-size: 13px;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding: 6px 13px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.toc a:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-w); }
+.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ============ 章节 ============ */
+.sec { margin-bottom: 68px; scroll-margin-top: 24px; }
+.sec-head { margin-bottom: 26px; }
+.sec-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-3);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 8px;
+}
+.sec h2 {
+  font-size: 25px;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+.sec h2 .brandmark {
+  display: inline-block;
+  width: 9px; height: 9px;
+  border-radius: 2px;
+  margin-right: 11px;
+  vertical-align: 0.12em;
+}
+.sec-sub { color: var(--ink-2); font-size: 15px; margin-top: 9px; max-width: 62ch; }
+
+h3 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  text-wrap: balance;
+}
+h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin-bottom: 2px;
+}
+
+p { max-width: var(--measure); }
+p + p { margin-top: 12px; }
+
+strong { font-weight: 700; color: var(--ink); }
+em { font-style: normal; background: linear-gradient(transparent 62%, var(--accent-w) 62%); font-weight: 600; }
+
+ul.list { list-style: none; max-width: var(--measure); display: flex; flex-direction: column; gap: 8px; }
+ul.list > li { padding-left: 18px; position: relative; color: var(--ink-2); }
+ul.list > li::before {
+  content: ""; position: absolute; left: 2px; top: 0.72em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--rule-2);
+}
+ul.list > li > strong { color: var(--ink); }
+
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* ============ 表格 ============ */
+.scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--ground); }
+.scroll::-webkit-scrollbar { height: 8px; }
+.scroll::-webkit-scrollbar-thumb { background: var(--rule-2); border-radius: 4px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 660px; }
+thead th {
+  background: var(--panel);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ink-2);
+  letter-spacing: 0.03em;
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--rule);
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+tbody td {
+  padding: 13px 15px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: #fbfcfe; }
+th.rowhead, td.rowhead {
+  color: var(--ink);
+  font-weight: 650;
+  white-space: nowrap;
+  background: var(--ground);
+}
+tbody tr:hover td.rowhead { background: #fbfcfe; }
+td .num, th .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+td.c, th.c { text-align: center; }
+.cap { font-size: 12.5px; color: var(--ink-3); margin-top: 10px; max-width: 68ch; line-height: 1.65; }
+
+/* ============ 品牌色标签 ============ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 3px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.chip.p { background: var(--plaud-w);  color: var(--plaud); }
+.chip.f { background: var(--feishu-w); color: var(--feishu); }
+.chip.o { background: var(--otter-w);  color: var(--otter); }
+.chip.x { background: var(--xunfei-w); color: var(--xunfei); }
+.chip.k { background: var(--pocket-w); color: var(--pocket); }
+.chip.a { background: var(--anker-w);  color: var(--anker); }
+.chip.l { background: var(--looki-w);  color: var(--looki); }
+.chip.muted { background: var(--panel-2); color: var(--ink-2); }
+
+/* ============ 额度条 ============ */
+.meters { display: flex; flex-direction: column; gap: 26px; }
+.meter-group { display: flex; flex-direction: column; gap: 11px; }
+.meter-group > .mg-title {
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--rule);
+}
+.meter { display: grid; grid-template-columns: 214px 1fr 118px; align-items: center; gap: 14px; }
+.meter .m-label { font-size: 13px; font-weight: 650; color: var(--ink); }
+/* 价格角标：抬高半个字身、缩小、去饱和，只作注释不与产品名争视线 */
+.meter .m-label .m-price {
+  display: inline-block;
+  margin-left: 6px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--ink-3);
+  vertical-align: 0.42em;
+  white-space: nowrap;
+}
+.meter .m-track { display: block; height: 22px; background: var(--panel); border-radius: 4px; overflow: hidden; position: relative; }
+/* span 的父级是普通块级元素，必须显式 block，否则宽高被当作行内元素忽略 */
+.meter .m-fill { display: block; height: 100%; border-radius: 4px; }
+.meter .m-fill.p { background: var(--plaud); }
+.meter .m-fill.f { background: var(--feishu); }
+.meter .m-fill.o { background: var(--otter); }
+.meter .m-fill.x { background: var(--xunfei); }
+.meter .m-fill.k { background: var(--pocket); }
+.meter .m-fill.a { background: var(--anker); }
+.meter .m-fill.l { background: var(--looki); }
+.meter .m-fill.inf {
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    115deg, transparent 0 7px, rgba(255,255,255,.42) 7px 14px);
+}
+.meter .m-fill.inf.p { background-color: var(--plaud); }
+.meter .m-fill.inf.f { background-color: var(--feishu); }
+.meter .m-fill.inf.o { background-color: var(--otter); }
+.meter .m-fill.inf.x { background-color: var(--xunfei); }
+.meter .m-fill.inf.k { background-color: var(--pocket); }
+.meter .m-fill.inf.a { background-color: var(--anker); }
+.meter .m-fill.inf.l { background-color: var(--looki); }
+.meter .m-val {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  text-align: right;
+  white-space: nowrap;
+}
+@media (max-width: 620px) {
+  .meter { grid-template-columns: 1fr; gap: 5px; }
+  .meter .m-val { text-align: left; }
+}
+
+/* ============ 价格轴 ============ */
+.band { margin-top: 6px; }
+.band-lane { display: grid; grid-template-columns: 132px 1fr; align-items: center; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+.band-lane:last-of-type { border-bottom: none; }
+.band-lane .bl-name { font-size: 13.5px; font-weight: 700; }
+.band-track { position: relative; height: 46px; }
+.band-track::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%;
+  height: 1px; background: var(--rule-2);
+}
+.pt { position: absolute; top: 50%; transform: translate(-50%, -50%); text-align: center; white-space: nowrap; }
+.pt .dot { display: block; width: 11px; height: 11px; border-radius: 50%; margin: 0 auto; border: 2px solid var(--ground); box-sizing: content-box; }
+.pt .dot.p { background: var(--plaud); }
+.pt .dot.f { background: var(--feishu); }
+.pt .dot.o { background: var(--otter); }
+.pt .dot.x { background: var(--xunfei); }
+.pt .dot.k { background: var(--pocket); }
+.pt .lb {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums;
+  color: var(--ink-2); line-height: 1.35;
+}
+.pt .lb .nm { display: block; font-family: var(--sans); font-size: 10.5px; color: var(--ink-3); }
+.pt.up .lb   { bottom: 15px; }
+.pt.down .lb { top: 15px; }
+.band-axis { position: relative; height: 20px; margin-left: 148px; margin-top: 4px; }
+.band-axis span {
+  position: absolute; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+}
+@media (max-width: 720px) {
+  .band-lane { grid-template-columns: 1fr; gap: 4px; }
+  .band-axis { margin-left: 0; }
+}
+
+/* ============ 要点卡 ============ */
+.finds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.find { background: var(--ground); padding: 22px 20px; display: flex; flex-direction: column; gap: 8px; }
+.find .f-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.find .f-big { font-size: 27px; font-weight: 800; letter-spacing: -0.025em; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.find .f-txt { font-size: 13px; color: var(--ink-2); line-height: 1.62; }
+@media (max-width: 780px) { .finds { grid-template-columns: 1fr; } }
+
+/* ============ 提示块 ============ */
+.note {
+  border-left: 2px solid var(--rule-2);
+  padding: 3px 0 3px 18px;
+  font-size: 14px;
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+.note.warn { border-left-color: var(--otter); }
+.note.key  { border-left-color: var(--accent); }
+.note b { color: var(--ink); }
+
+/* ============ 定价卡 ============ */
+.plans { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; grid-template-columns: repeat(4, 1fr); }
+.plan { background: var(--ground); padding: 20px 18px; display: flex; flex-direction: column; gap: 5px; }
+.plan .pl-name { font-size: 13.5px; font-weight: 750; }
+.plan .pl-price { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 21px; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.plan .pl-price small { font-size: 11.5px; font-weight: 500; color: var(--ink-3); letter-spacing: 0; }
+.plan .pl-alt { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.plan .pl-quota { font-size: 12.5px; color: var(--ink-2); margin-top: 7px; padding-top: 9px; border-top: 1px dashed var(--rule); line-height: 1.55; }
+.plan.hl-p .pl-price { color: var(--plaud); }
+.plan.hl-f .pl-price { color: var(--feishu); }
+.plan.hl-o .pl-price { color: var(--otter); }
+.plan.hl-x .pl-price { color: var(--xunfei); }
+.plan.hl-k .pl-price { color: var(--pocket); }
+.plan.hl-a .pl-price { color: var(--anker); }
+.plan.hl-l .pl-price { color: var(--looki); }
+.plans.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.plans.cols-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { .plans, .plans.cols-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 460px) { .plans, .plans.cols-2, .plans.cols-3 { grid-template-columns: 1fr; } }
+
+/* ============ 来源 ============ */
+.srcs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px 30px; }
+.srcs a {
+  font-size: 13px; color: var(--ink-2); text-decoration: none;
+  border-bottom: 1px solid var(--rule-2);
+  padding-bottom: 1px;
+  transition: color .15s, border-color .15s;
+  display: inline-block;
+}
+.srcs a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.srcs a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.srcs li { list-style: none; }
+.srcs .s-grp { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 12px 0 4px; grid-column: 1 / -1; }
+.srcs .s-grp:first-child { margin-top: 0; }
+@media (max-width: 720px) { .srcs { grid-template-columns: 1fr; } }
+
+footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 60px;
+  padding-top: 24px;
+  font-size: 12.5px;
+  color: var(--ink-3);
+  line-height: 1.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">竞品调研 / 订阅权益 · 云端保存 · 免费额度</div>
+    <h1>七款 AI 记录产品，<br>四款把免费额度定在了同一个数字上</h1>
+    <p class="lede">
+      为 AI 录音豆的套餐设计做的横向调研。核心问题有三个：会员订阅到底买到了什么、生成的纪要在云端能存多久、免费用户能用多少。
+      调研发现 300 分钟/月已经是这个品类的行业基准线，定价带也高度趋同，真正拉开差距的是免费额度<em>之外</em>的那些隐性限制。
+      五款硬件产品还无一例外都送订阅——但送 7 天和送 6 个月，是两种完全不同的生意。
+    </p>
+    <div class="meta-row">
+      <span>调研日期 <b>2026-08-07</b></span>
+      <span>覆盖产品 <b>6 款会议纪要 + 1 款参照组</b></span>
+      <span>信息来源 <b>36 个页面</b></span>
+      <span>取数口径 <b>官网定价页 + 官方帮助中心原文</b></span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="目录">
+    <a href="#overview">速览对比</a>
+    <a href="#viz">额度与定价可视化</a>
+    <a href="#bundle">硬件赠送期</a>
+    <a href="#plaud">Plaud</a>
+    <a href="#feishu">飞书妙记</a>
+    <a href="#otter">Otter.ai</a>
+    <a href="#xunfei">讯飞 P1 / P1 Pro</a>
+    <a href="#pocket">Pocket</a>
+    <a href="#anker">安克 AI 录音豆</a>
+    <a href="#looki">Looki L1 · 参照组</a>
+    <a href="#takeaway">横向结论</a>
+    <a href="#sources">信息来源</a>
+  </nav>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="overview">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>速览：七款产品，三个问题</h2>
+      <p class="sec-sub">先给结论。产品按「是否有独立订阅体系」排序，后续章节再逐家展开细则。</p>
+    </div>
+
+    <div class="scroll">
+      <table style="min-width:1040px;">
+        <thead>
+          <tr>
+            <th style="width:14%">产品</th>
+            <th style="width:18%">免费额度</th>
+            <th style="width:19%">付费主档</th>
+            <th style="width:14%">购机赠送订阅</th>
+            <th style="width:18%">云端保存多久</th>
+            <th style="width:17%">免费版真实卡点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rowhead"><span class="chip p">Plaud</span><br><span style="font-size:11.5px;color:var(--ink-3);">硬件 $159 起</span></td>
+            <td><strong class="num">300</strong> 转录分钟/月<br>激活设备即赠 Starter</td>
+            <td>Pro <span class="num">$8.33</span>/月（年付）<br>Unlimited <span class="num">$19.99</span>/月（年付）</td>
+            <td><strong>7 天</strong>试用<br><span style="font-size:12px;color:var(--ink-3);">到期自动续费</span></td>
+            <td><strong>无时限</strong>，云存储不限量且免费</td>
+            <td>只卡分钟数，<strong>功能一个不少</strong>，但必须先买硬件</td>
+          </tr>
+          <tr>
+            <td class="rowhead"><span class="chip f">飞书妙记</span><br><span style="font-size:11.5px;color:var(--ink-3);">纯软件</span></td>
+            <td><strong class="num">300</strong> 分钟转文字/月/人</td>
+            <td>AI 会员 <span class="num">¥69</span>/月<br>AI 会员 Plus <span class="num">¥138</span>/月起</td>
+            <td><span class="chip muted">无硬件</span></td>
+            <td><strong>无时限</strong>，但占用「统一存储」配额；回收站 30 天</td>
+            <td>超额后仍能录，只是新妙记<strong>不再出文字</strong>；AI 纪要另扣点数</td>
+          </tr>
+          <tr>
+            <td class="rowhead"><span class="chip o">Otter.ai</span><br><span style="font-size:11.5px;color:var(--ink-3);">纯软件</span></td>
+            <td><strong class="num">300</strong> 转录分钟/月<br>单条 ≤30 分钟、终身 3 次导入</td>
+            <td>Pro <span class="num">$8.33</span>/月（年付）<br>Business <span class="num">$19.99</span>/席/月（年付）</td>
+            <td><span class="chip muted">无硬件</span></td>
+            <td><strong>无时限</strong>，降级取消都不删；仅 Enterprise 可设自动清理</td>
+            <td>25 条以外的会话被<strong>归档锁住</strong>，单条 30 分钟硬截断</td>
+          </tr>
+          <tr>
+            <td class="rowhead"><span class="chip x">讯飞 P1 Pro</span><br><span style="font-size:11.5px;color:var(--ink-3);">硬件 $119 / $159</span></td>
+            <td><strong class="num">300</strong> 转录分钟/月<br>且<strong>云存储不限量</strong></td>
+            <td>Deepting Pro <span class="num">2,100</span> 分钟/月<br>约 <span class="num">$12.99</span>/月（见下文推算）</td>
+            <td><strong>3 个月</strong>赠送<br><span style="font-size:12px;color:var(--ink-3);">不自动扣费</span></td>
+            <td><strong>无时限</strong>，官方标注云存储不限量</td>
+            <td>纯粹卡分钟数，免费档已含摘要、翻译、说话人识别、不限次导出</td>
+          </tr>
+          <tr>
+            <td class="rowhead"><span class="chip k">Pocket</span><br><span style="font-size:11.5px;color:var(--ink-3);">硬件 $129 / $199</span></td>
+            <td><strong>不限量，终身</strong><br>转写与核心 AI 功能全免费</td>
+            <td>Pocket Pro <span class="num">$19.99</span>/月<br>年付约 <span class="num">$199</span>–245</td>
+            <td><strong>1 个月</strong>试用<br><span style="font-size:12px;color:var(--ink-3);">到期自动扣费</span></td>
+            <td>机身 64GB + 云端；但<strong>「不限量云端历史」属 Pro 权益</strong></td>
+            <td>不卡分钟，改卡功能：说话人分离、100+ 摘要模板、长录音、AI 问答</td>
+          </tr>
+          <tr>
+            <td class="rowhead"><span class="chip a">安克 AI 录音豆</span><br><span style="font-size:11.5px;color:var(--ink-3);">硬件 ¥899</span></td>
+            <td>飞书基础 <span class="num">300</span> 分钟/月<br><strong>+ 赠 1,200 分钟 + 25 篇纪要</strong>（前 6 个月）</td>
+            <td><span class="chip muted">无独立订阅</span><br>到期后需自购飞书 AI 会员</td>
+            <td><strong>6 个月</strong>赠送<br><span style="font-size:12px;color:var(--ink-3);">不自动扣费 · 最长</span></td>
+            <td>同飞书妙记，受统一存储配额约束</td>
+            <td>赠送权益<strong>绑定设备，解绑即失效</strong>；6 个月后回落至 300 分钟</td>
+          </tr>
+          <tr>
+            <td class="rowhead"><span class="chip l">Looki L1</span><br><span style="font-size:11.5px;color:var(--ink-3);">硬件 $199 · 参照组</span></td>
+            <td><strong>不按分钟计</strong><br>免费档 Essential，含基础存储与 AI</td>
+            <td>Prime 约 <span class="num">$10</span>/月<br><span style="font-size:12px;color:var(--ink-3);">档位与价格未获官方求证</span></td>
+            <td><strong>1 个月</strong> Prime<br><span style="font-size:12px;color:var(--ink-3);">第三方评测口径</span></td>
+            <td>默认<strong>只存本地</strong>，用户主动同步才上云（AWS，按地区存储）</td>
+            <td>官方称目前<strong>无强制订阅</strong>；高级 AI 与大容量存储走付费档</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cap">
+      Plaud、讯飞、Pocket、安克、Looki 为硬件产品，订阅权益均以先购买设备为前提。安克 AI 录音豆没有自建会员体系，其 AI 能力完全由飞书妙记提供，因此本表中它与飞书妙记共享同一套云端规则。
+      <strong>Looki L1 是 AI 生活记录相机，不是会议纪要产品</strong>，其计量单位是存储与 AI 处理量而非转写分钟，本表中的"免费额度"一列对它不适用，列入仅作跨品类参照，详见第 10 节。
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="viz">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>额度与定价：两处趋同一眼可见</h2>
+      <p class="sec-sub">把六款会议纪要产品的分钟数和月价放到同一把尺子上，行业默认值就显形了。参照组 Looki L1 不按分钟计费，不纳入本节。</p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="meters">
+        <div class="meter-group">
+          <div class="mg-title">免费档 · 月度转录额度 —— 四条一样长，两个例外</div>
+          <div class="meter">
+            <span class="m-label">Plaud Starter</span>
+            <span class="m-track"><span class="m-fill p" style="width:5%"></span></span>
+            <span class="m-val">300 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">飞书基础版 / 个人版</span>
+            <span class="m-track"><span class="m-fill f" style="width:5%"></span></span>
+            <span class="m-val">300 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">Otter Basic</span>
+            <span class="m-track"><span class="m-fill o" style="width:5%"></span></span>
+            <span class="m-val">300 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">讯飞 Deepting 免费档</span>
+            <span class="m-track"><span class="m-fill x" style="width:5%"></span></span>
+            <span class="m-val">300 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">安克录音豆（前 6 个月）</span>
+            <span class="m-track"><span class="m-fill a" style="width:25%"></span></span>
+            <span class="m-val">1,500 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">Pocket 免费档</span>
+            <span class="m-track"><span class="m-fill inf k"></span></span>
+            <span class="m-val">不限量 · 终身</span>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <div class="mg-title">入门付费档 · 月度转录额度</div>
+          <div class="meter">
+            <span class="m-label">Plaud Pro<span class="m-price">$8.33/月</span></span>
+            <span class="m-track"><span class="m-fill p" style="width:20%"></span></span>
+            <span class="m-val">1,200 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">飞书 AI 会员<span class="m-price">¥69/月</span></span>
+            <span class="m-track"><span class="m-fill f" style="width:50%"></span></span>
+            <span class="m-val">3,000 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">Otter Pro<span class="m-price">$8.33/月</span></span>
+            <span class="m-track"><span class="m-fill o" style="width:20%"></span></span>
+            <span class="m-val">1,200 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">讯飞 Deepting Pro<span class="m-price">≈$12.99/月</span></span>
+            <span class="m-track"><span class="m-fill x" style="width:35%"></span></span>
+            <span class="m-val">2,100 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">Pocket Pro<span class="m-price">$19.99/月</span></span>
+            <span class="m-track"><span class="m-fill inf k"></span></span>
+            <span class="m-val">不限量（免费档已不限）</span>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <div class="mg-title">进阶付费档 · 月度转录额度</div>
+          <div class="meter">
+            <span class="m-label">Plaud Unlimited<span class="m-price">$19.99/月</span></span>
+            <span class="m-track"><span class="m-fill inf p"></span></span>
+            <span class="m-val">不限 · 24 小时/天</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">飞书 AI 会员 Plus<span class="m-price">¥138/月起</span></span>
+            <span class="m-track"><span class="m-fill f" style="width:100%"></span></span>
+            <span class="m-val">6,000 分钟</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">Otter Business<span class="m-price">$19.99/席/月</span></span>
+            <span class="m-track"><span class="m-fill inf o"></span></span>
+            <span class="m-val">不限（导入另限 6,000）</span>
+          </div>
+        </div>
+        <p class="cap">
+          条长以 6,000 分钟为满值；斜纹表示不限量。产品名后的灰色角标为该档月价，美元档均按<strong>年付折算</strong>。
+          飞书 Plus 的 6,000 分钟是 2 倍档，官方最高可选到 40 倍档。
+          安克的 1,500 分钟 = 飞书基础 300 + 赠送 1,200，仅限绑定后前 6 个月，到期回落至 300 分钟。
+          Pocket 的付费档不加分钟——它免费档就已不限量，Pro 卖的是功能。
+        </p>
+      </div>
+
+      <div>
+        <h3>月价分布：$8.33 与 $20 两条线</h3>
+        <p class="cap" style="margin-bottom:6px;">每条泳道是一家产品，共用下方同一根价格轴。五家的付费档几乎落在同两个位置上。</p>
+        <div class="band">
+
+          <div class="band-lane">
+            <span class="bl-name"><span class="chip p">Plaud</span></span>
+            <div class="band-track">
+              <div class="pt up" style="left:0.5%"><span class="dot p"></span><span class="lb" style="transform:translateX(-20%)">$0<span class="nm">Starter</span></span></div>
+              <div class="pt down" style="left:27.8%"><span class="dot p"></span><span class="lb">$8.33<span class="nm">Pro 年付</span></span></div>
+              <div class="pt up" style="left:66.6%"><span class="dot p"></span><span class="lb">$19.99<span class="nm">Unlimited 年付</span></span></div>
+            </div>
+          </div>
+
+          <div class="band-lane">
+            <span class="bl-name"><span class="chip f">飞书妙记</span></span>
+            <div class="band-track">
+              <div class="pt up" style="left:0.5%"><span class="dot f"></span><span class="lb" style="transform:translateX(-20%)">¥0<span class="nm">基础版</span></span></div>
+              <div class="pt down" style="left:32%"><span class="dot f"></span><span class="lb">≈$9.6<span class="nm">AI 会员 ¥69</span></span></div>
+              <div class="pt up" style="left:64%"><span class="dot f"></span><span class="lb">≈$19.2<span class="nm">Plus ¥138</span></span></div>
+            </div>
+          </div>
+
+          <div class="band-lane">
+            <span class="bl-name"><span class="chip o">Otter.ai</span></span>
+            <div class="band-track">
+              <div class="pt up" style="left:0.5%"><span class="dot o"></span><span class="lb" style="transform:translateX(-20%)">$0<span class="nm">Basic</span></span></div>
+              <div class="pt down" style="left:27.8%"><span class="dot o"></span><span class="lb">$8.33<span class="nm">Pro 年付</span></span></div>
+              <div class="pt up" style="left:66.6%"><span class="dot o"></span><span class="lb">$19.99<span class="nm">Business 年付</span></span></div>
+            </div>
+          </div>
+
+          <div class="band-lane">
+            <span class="bl-name"><span class="chip x">讯飞 P1 Pro</span></span>
+            <div class="band-track">
+              <div class="pt up" style="left:0.5%"><span class="dot x"></span><span class="lb" style="transform:translateX(-20%)">$0<span class="nm">免费档</span></span></div>
+              <div class="pt down" style="left:43.3%"><span class="dot x"></span><span class="lb">≈$12.99<span class="nm">Deepting Pro</span></span></div>
+            </div>
+          </div>
+
+          <div class="band-lane">
+            <span class="bl-name"><span class="chip k">Pocket</span></span>
+            <div class="band-track">
+              <div class="pt up" style="left:0.5%"><span class="dot k"></span><span class="lb" style="transform:translateX(-20%)">$0<span class="nm">不限量 · 终身</span></span></div>
+              <div class="pt down" style="left:66.6%"><span class="dot k"></span><span class="lb">≈$19.99<span class="nm">Pro（仅加功能）</span></span></div>
+            </div>
+          </div>
+
+          <div class="band-axis">
+            <span style="left:0.5%">$0</span>
+            <span style="left:33.3%">$10</span>
+            <span style="left:66.6%">$20</span>
+            <span style="left:99%">$30</span>
+          </div>
+        </div>
+        <p class="cap">
+          均为年付折算后的月价。人民币按 ≈7.2 折算，仅用于位置示意。
+          Plaud Team（$20–25/席/月）计价单位是席位，与个人档不可比，未纳入本轴。
+          安克 AI 录音豆没有独立订阅，其付费路径就是飞书那条泳道，故不单列。
+          讯飞与 Pocket 的月价为推算值，依据见各自章节。
+        </p>
+      </div>
+
+      <div class="finds">
+        <div class="find">
+          <span class="f-tag">免费额度</span>
+          <span class="f-big">300 分钟</span>
+          <span class="f-txt">六款会议纪要产品里有四款锚定同一个数（Plaud、飞书、Otter、讯飞）。300 分钟/月已经是这个品类的免费基准线。</span>
+        </div>
+        <div class="find">
+          <span class="f-tag">进阶付费档</span>
+          <span class="f-big">$19.99/月</span>
+          <span class="f-txt">Plaud Unlimited、Otter Business、Pocket Pro 三家同价，飞书 Plus 折算后也落在这条线附近。</span>
+        </div>
+        <div class="find">
+          <span class="f-tag">唯一的例外</span>
+          <span class="f-big">Pocket</span>
+          <span class="f-txt">免费档就给不限量转写，订阅不卖分钟只卖功能。六款会议纪要产品里唯一不用额度做付费墙的。</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="bundle">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>硬件赠送期：五款全都送，但时长差 26 倍</h2>
+      <p class="sec-sub">
+        五款硬件产品——Plaud、讯飞、Pocket、安克、Looki——<strong>没有一款是光卖硬件不送订阅的</strong>。但赠送时长从 7 天到 6 个月，
+        且分成两种机制完全不同的类型，对用户的实际含义天差地别。
+      </p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="meters">
+        <div class="meter-group">
+          <div class="mg-title">购机赠送订阅时长 · 以 6 个月为满值</div>
+          <div class="meter">
+            <span class="m-label">Plaud</span>
+            <span class="m-track"><span class="m-fill p" style="width:3.9%"></span></span>
+            <span class="m-val">7 天（试用）</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">Pocket</span>
+            <span class="m-track"><span class="m-fill k" style="width:16.7%"></span></span>
+            <span class="m-val">1 个月（试用）</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">Looki L1<span style="color:var(--ink-3);font-weight:400;font-size:12px;"> · 参照组</span></span>
+            <span class="m-track"><span class="m-fill l" style="width:16.7%"></span></span>
+            <span class="m-val">1 个月 Prime</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">讯飞 P1 / P1 Pro</span>
+            <span class="m-track"><span class="m-fill x" style="width:50%"></span></span>
+            <span class="m-val">3 个月（赠送）</span>
+          </div>
+          <div class="meter">
+            <span class="m-label">安克 AI 录音豆</span>
+            <span class="m-track"><span class="m-fill a" style="width:100%"></span></span>
+            <span class="m-val">6 个月（赠送）</span>
+          </div>
+        </div>
+        <p class="cap">
+          飞书妙记与 Otter.ai 为纯软件产品，无硬件绑定赠送，故不在本图。
+          Looki L1 的 1 个月来自两家独立第三方评测，未获官方页面求证；另有一源称 3 个月（价值 $30），存在冲突，取较保守值。
+        </p>
+      </div>
+
+      <div class="stack">
+        <h3>逐款细则</h3>
+        <div class="scroll">
+          <table style="min-width:860px;">
+            <thead>
+              <tr>
+                <th style="width:17%">产品</th>
+                <th style="width:14%">赠送时长</th>
+                <th style="width:25%">赠送内容</th>
+                <th style="width:22%">到期后会发生什么</th>
+                <th style="width:22%">领取条件</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowhead"><span class="chip p">Plaud</span></td>
+                <td><strong>7 天</strong><br><span style="font-size:12px;color:var(--ink-3);">或 3 天，见右</span></td>
+                <td>年度 Pro <em>或</em> 年度 Unlimited 全功能</td>
+                <td><strong>自动续费为年付会员</strong>，不取消即扣款</td>
+                <td>绑定首台设备后 <strong>72 小时内</strong>领可得 7 天；<strong>超过 72 小时只剩 3 天</strong></td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip k">Pocket</span></td>
+                <td><strong>1 个月</strong></td>
+                <td>Pocket Pro 全功能</td>
+                <td><strong>自动转入 $19.99/月</strong>订阅</td>
+                <td>App 内激活新设备即得；另有推荐计划，每推荐 1 人双方各得 1 个月</td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip x">讯飞 P1 / P1 Pro</span></td>
+                <td><strong>3 个月</strong></td>
+                <td>Deepting Pro，2,100 分钟/月<br>官方标注价值 <span class="num">$38.97</span></td>
+                <td>回落至免费档 300 分钟/月<br><strong>不自动扣费</strong></td>
+                <td>购机即赠。官网标注活动窗口 <strong>6/8–7/8</strong>，调研日前已结束</td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip a">安克 AI 录音豆</span></td>
+                <td><strong>6 个月</strong></td>
+                <td>每月 +1,200 分钟转文字<br>+ 25 篇智能纪要</td>
+                <td>回落至飞书基础 300 分钟/月<br><strong>不自动扣费</strong>，需主动购买 AI 会员</td>
+                <td>绑定飞书账号即赠，自首次绑定日起算；<strong>解绑即失效</strong></td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip l">Looki L1</span><br><span style="font-size:11.5px;color:var(--ink-3);">参照组</span></td>
+                <td><strong>1 个月</strong><br><span style="font-size:12px;color:var(--ink-3);">另有一源称 3 个月</span></td>
+                <td>Prime 会员（最高档，约 $10/月）</td>
+                <td>回落至免费档 Essential<br><span style="font-size:12px;color:var(--ink-3);">是否自动扣费未获证实</span></td>
+                <td>购机即赠。<strong>以上均为第三方评测口径</strong>，官方会员页当前不可访问</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>关键区分：这不是同一种东西</h3>
+        <p>把五款按机制分开看，会发现"赠送订阅"这个说法掩盖了两种完全相反的商业设计——其中 Looki L1 因缺乏到期扣费信息，暂无法归类：</p>
+        <div class="finds">
+          <div class="find">
+            <span class="f-tag">类型 A · 试用转化型</span>
+            <span class="f-big">7 天 / 1 个月</span>
+            <span class="f-txt">
+              <strong>Plaud、Pocket（Looki 疑似同类）。</strong>时长短，且<strong>到期自动扣款</strong>。本质是用免费期换取用户的支付授权，
+              转化率高，但需要用户主动取消才能不付费。Plaud 还设了 72 小时领取窗口，逾期时长直接砍掉 57%。
+            </span>
+          </div>
+          <div class="find">
+            <span class="f-tag">类型 B · 权益赠送型</span>
+            <span class="f-big">3 个月 / 6 个月</span>
+            <span class="f-txt">
+              <strong>讯飞、安克。</strong>时长长得多，且<strong>到期不自动扣费</strong>，只是回落到免费档。
+              把赠送期当作产品体验期而非付费漏斗，用户心理负担低，但转化需要另做动作。
+            </span>
+          </div>
+          <div class="find">
+            <span class="f-tag">两者共同点</span>
+            <span class="f-big">100%</span>
+            <span class="f-txt">
+              五款硬件产品无一例外都提供了赠送或试用。<strong>「买硬件送一段会员」已经是这个品类的标配</strong>，
+              不送反而会成为竞争劣势。
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="note warn">
+        <b>一个容易被忽略的设计细节。</b>Plaud 的 72 小时领取窗口意味着：用户如果收到设备后没有立刻绑定并领取试用，
+        能拿到的试用期就从 7 天缩水到 3 天。这是把<b>开箱即用的紧迫感</b>直接做进了权益规则里——值得注意，但也需要权衡它对用户体验的负面观感。
+      </div>
+
+      <div class="note">
+        <b>补充说明：</b>Plaud 另有「设备 + 年度订阅」的捆绑 SKU（如 Plaud Note Pro & AI Annual Unlimited Plan），
+        那是<b>付费打包销售</b>而非免费赠送，与本节讨论的赠送期不是一回事。
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="plaud">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2><span class="brandmark" style="background:var(--plaud)"></span>Plaud：只按分钟数分层，功能不做阉割</h2>
+      <p class="sec-sub">硬件优先的产品，订阅名为 Plaud AI Membership（Plaud Intelligence）。所有权益的前提是先拥有一台设备。</p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="stack">
+        <h3>订阅方案与价格</h3>
+        <div class="plans">
+          <div class="plan hl-p">
+            <span class="pl-name">Starter</span>
+            <span class="pl-price">$0</span>
+            <span class="pl-alt">激活设备即赠</span>
+            <span class="pl-quota">300 转录分钟/月</span>
+          </div>
+          <div class="plan hl-p">
+            <span class="pl-name">Pro</span>
+            <span class="pl-price">$8.33 <small>/月 · 年付</small></span>
+            <span class="pl-alt">$99.99/年 · 月付 $17.99</span>
+            <span class="pl-quota">1,200 转录分钟/月（20 小时）</span>
+          </div>
+          <div class="plan hl-p">
+            <span class="pl-name">Unlimited</span>
+            <span class="pl-price">$19.99 <small>/月 · 年付</small></span>
+            <span class="pl-alt">$239.99/年 · 月付 $29.99</span>
+            <span class="pl-quota">不限量，上限 24 小时/天</span>
+          </div>
+          <div class="plan hl-p">
+            <span class="pl-name">Team</span>
+            <span class="pl-price">$20 <small>/席/月 · 年付</small></span>
+            <span class="pl-alt">首年限时价 · 月付 $28/席</span>
+            <span class="pl-quota">不限量，上限 24 小时/天</span>
+          </div>
+        </div>
+        <p class="cap">Team 的 $20/席为首年限时优惠，2026-08-31 截止，之后年付 $25/席、月付 $35/席。年付相比月付 Pro 省约 54%、Unlimited 省 33%。</p>
+      </div>
+
+      <div class="stack">
+        <h3>最关键的发现：四档功能完全一致</h3>
+        <p>把官网对比表的勾选状态逐行取出后可以确认，<em>四个档位在功能上没有任何差异，唯一的变量就是转录分钟数</em>。免费的 Starter 同样拥有：</p>
+        <ul class="list">
+          <li>112 种语言转录、自动说话人标注、自定义词库（Beta）</li>
+          <li>多维度摘要（Beta）+ <strong>10,000+ 模板</strong> + 自定义模板 + 思维导图</li>
+          <li>最新大模型：GPT-5.5、Gemini 3.1 Pro、Claude Sonnet 4.6 等</li>
+          <li><strong>Ask Plaud</strong>（跨全部录音的自然语言检索）、<strong>AutoFlow</strong>（自动转录 → 摘要 → 发邮件）、自动生成</li>
+          <li>Zapier / Google Calendar 集成、<strong>Plaud MCP Server</strong>、27+ 导出格式</li>
+          <li>SSO，以及 ISO 27001/27701、SOC 2 Type II、GDPR、HIPAA、EN 18031 合规</li>
+        </ul>
+        <div class="note key">
+          <b>只有 Team 独有：</b>团队工作区、集中计费、席位与设备管理、工作区级数据驻留、DPA、优先支持。
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>额度规则</h3>
+        <ul class="list">
+          <li><strong>不结转</strong>：每个计费月初清零重置。</li>
+          <li><strong>超额不影响录音</strong>：只有转录暂停，录音、回放、文件管理、云同步照常运行。</li>
+          <li><strong>加油包</strong>（一次性，不改变当前订阅）：600 分钟 <span class="num">$12.99</span> ／ 3,000 分钟 <span class="num">$59.99</span> ／ 6,000 分钟 <span class="num">$99.99</span>。</li>
+        </ul>
+      </div>
+
+      <div class="stack">
+        <h3>购机赠送：7 天试用，且有 72 小时领取窗口</h3>
+        <ul class="list">
+          <li>绑定首台设备后 <strong>72 小时内</strong>，可试用 <strong>7 天</strong>年度 Pro 或年度 Unlimited。</li>
+          <li><strong>超过 72 小时，只剩 3 天试用</strong>——时长直接砍掉 57%。</li>
+          <li>试用期内可切换套餐：<strong>升级立即生效且试用终止</strong>；降级在试用结束后才生效。</li>
+        </ul>
+        <div class="note warn">
+          <b>到期自动扣款。</b>不主动取消，试用结束即<b>自动续费为年付会员</b>。各渠道扣款时机不同：
+          iOS 在到期时刻精确扣款；Google Play <b>提前 24 小时</b>发起首次扣款尝试；Stripe 在到期后约 1 小时内扣款。
+          iOS 失败后会自动重试长达 28 天。想白嫖试用的用户需要留意这个时间差。
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>云端保存</h3>
+        <ul class="list">
+          <li><strong>Private Cloud Sync 免费且容量不限</strong>，全部方案都含，覆盖 App / Web / Desktop 三端。</li>
+          <li>官方安全文档原文：录音、转写、摘要<strong>保留到用户手动删除或注销账号为止</strong>，没有时间上限。</li>
+          <li><strong>默认不上云</strong>：不开 Cloud Sync 时录音只存本机，音频仅在 AI 处理时临时上传，处理完不保留服务端副本。</li>
+          <li>数据驻留：欧盟 → AWS 法兰克福，美洲 → AWS 俄勒冈，亚太 → AWS 新加坡，日本 → AWS 日本。</li>
+        </ul>
+        <div class="note warn">
+          <b>一处措辞需要留意。</b>安全页说「取消（cancel）触发完整删除」，指的是<b>注销账号</b>；而会员 FAQ 明确写着<b>退订付费方案不会删除任何内容</b>，账号自动退回 Starter，历史录音和转写仍可访问。两者不矛盾，但容易误读。
+        </div>
+        <div class="note">
+          <b>前提条件：</b>Plaud 是硬件优先产品，上述权益都需要先购买设备（Plaud Note 官网 $159），Starter 是「每台激活设备附送」，无法纯软件使用。
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="feishu">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2><span class="brandmark" style="background:var(--feishu)"></span>飞书妙记：额度分两层，转文字与 AI 点数分开计价</h2>
+      <p class="sec-sub">妙记本身不是独立订阅，权益来自两条线：飞书套件版本，以及可单独购买的飞书 AI 会员。</p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="stack">
+        <h3>妙记语音转文字额度（ASR）</h3>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr><th style="width:44%">版本</th><th>妙记转文字时长</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="rowhead">基础免费版 / 个人版</td><td><strong class="num">300 分钟</strong>/用户/月</td></tr>
+              <tr><td class="rowhead">商业标准版 / 专业版 / 旗舰版、企业版</td><td>不限时长</td></tr>
+              <tr><td class="rowhead">AI 会员（¥69/月）</td><td><strong class="num">3,000 分钟</strong>/月</td></tr>
+              <tr><td class="rowhead">AI 会员 Plus（¥138/月起）</td><td><strong class="num">6,000 分钟</strong>/月</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 style="margin-top:18px;">免费额度细则（2024-12 起执行，官方公告原文）</h4>
+        <ul class="list">
+          <li>300 分钟覆盖 <strong>4 个场景</strong>：会议录制、录音、本地文件上传妙记、云文件导入妙记。</li>
+          <li><strong>会中字幕不占用</strong>该额度。</li>
+          <li>超出后<strong>会议录制照常可用，只是新生成的妙记不再提供文字记录</strong>；次月 1 号恢复 300 分钟。</li>
+          <li>聊天记录另有规则：免费版只能搜索与查看最近 <strong>18 个月</strong>，付费版永久保存。</li>
+        </ul>
+      </div>
+
+      <div class="stack">
+        <h3>AI 会员权益（官网标注「内测中」）</h3>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:26%"></th>
+                <th style="width:37%">AI 会员 · <span class="num">¥69</span>/月</th>
+                <th style="width:37%">AI 会员 Plus · <span class="num">¥138</span>/月起</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowhead">AI 个人额度</td>
+                <td>每月固定额度，可自由用于智能会议纪要、知识问答、飞书 aily、飞书妙搭</td>
+                <td>AI 会员的 <strong>2× ～ 40×</strong>，多档可选</td>
+              </tr>
+              <tr>
+                <td class="rowhead">ASR 转录时长</td>
+                <td><span class="num">3,000</span> 分钟/月</td>
+                <td><span class="num">6,000</span> 分钟/月</td>
+              </tr>
+              <tr>
+                <td class="rowhead">会议增值</td>
+                <td>实时字幕 + 智能翻译</td>
+                <td>实时字幕 + 智能翻译</td>
+              </tr>
+              <tr>
+                <td class="rowhead">限时赠送</td>
+                <td>3 张一小时加时卡、1 次 50 方会议</td>
+                <td>6 张一小时加时卡、2 次 50 方会议</td>
+              </tr>
+              <tr>
+                <td class="rowhead">独有权益</td>
+                <td>—</td>
+                <td>1 个 OpenClaw 应用资源费免除、产出物去水印、优先体验 AI 实验功能</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="cap">按年付费官网标注省 17%。购买页支持「为自己买」与「为团队买」，团队购买后需在增值中心分配席位。</p>
+      </div>
+
+      <div class="stack">
+        <h3>智能纪要是单独计费的，这点最容易被忽略</h3>
+        <p>300 分钟免费额度只管<strong>转文字</strong>，AI 生成纪要要扣 AI 点数：</p>
+        <ul class="list">
+          <li>会议 AI 总结／录制：单场累计 <strong>≤5 分钟不扣点</strong>；&gt;5 分钟按 <strong>0.5 点/分钟</strong>（不足 1 分钟进位）。</li>
+          <li>妙记内上传音视频、录音生成纪要：<strong>0.5 点/分钟</strong>。</li>
+          <li>智能面试总结：<strong>20 点/次</strong>。</li>
+          <li>扣减优先级：企业分配的功能专用额度 → 企业 AI 通用额度 → 个人 AI 会员额度 → 免费额度。</li>
+        </ul>
+        <div class="note warn">
+          <b>免费用户的实际处境：</b>只有「产品不定期发放」的免费额度，没有稳定配额。也就是说，免费版能拿到转写文本，但拿不到稳定的 AI 纪要。
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>云端保存多久</h3>
+        <p>妙记<strong>没有时间上限</strong>，但受「统一存储」配额约束。2024 年起飞书把即时消息、云文档、妙记、邮箱合并为同一个存储池：</p>
+        <div class="scroll">
+          <table>
+            <thead><tr><th style="width:56%">版本</th><th>统一存储</th></tr></thead>
+            <tbody>
+              <tr><td class="rowhead">基础免费版（认证前）</td><td class="num">15 GB</td></tr>
+              <tr><td class="rowhead">基础免费版（认证后）／个人版</td><td class="num"><strong>100 GB</strong></td></tr>
+              <tr><td class="rowhead">商业标准版</td><td class="num">1,500 GB</td></tr>
+              <tr><td class="rowhead">商业专业版</td><td class="num">5 TB</td></tr>
+              <tr><td class="rowhead">商业旗舰版</td><td class="num">15 TB</td></tr>
+              <tr><td class="rowhead">企业旗舰版</td><td class="num">15 TB + 购买人数 × 30 GB</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="list" style="margin-top:16px;">
+          <li>存储扩容包价格已从 <span class="num">8,000 元/TB·年</span> 降至 <span class="num">2,000 元/TB·年</span>。</li>
+          <li><strong>存储满了会导致无法生成新妙记</strong>——这是免费版的实际天花板。</li>
+          <li>删除后进回收站，<strong>30 天内可恢复，超期自动永久删除</strong>且无法找回。</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="otter">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2><span class="brandmark" style="background:var(--otter)"></span>Otter.ai：靠「归档」而不是「删除」来卡免费用户</h2>
+      <p class="sec-sub">数据永不主动删除，但免费版能看到的只有最近 25 条，其余全部锁进归档，成为升级钩子。</p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="stack">
+        <h3>订阅权益与额度全表</h3>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:20%"></th>
+                <th>Basic（免费）</th>
+                <th>Pro</th>
+                <th>Business</th>
+                <th>Enterprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowhead">价格</td>
+                <td class="num">$0</td>
+                <td><strong class="num">$8.33</strong>/席/月（年付，省 51%）<br><span class="num">月付 $16.99</span></td>
+                <td><strong class="num">$19.99</strong>/席/月（年付，省 33%）<br><span class="num">月付约 $30</span></td>
+                <td>定制</td>
+              </tr>
+              <tr>
+                <td class="rowhead">会议／录音转录额度</td>
+                <td class="num"><strong>300</strong> 分钟/人/月</td>
+                <td class="num">1,200 分钟/人/月</td>
+                <td>不限</td>
+                <td>不限</td>
+              </tr>
+              <tr>
+                <td class="rowhead">导入文件转录额度</td>
+                <td class="num">300 分钟（与上共用一池）</td>
+                <td class="num">1,200 分钟（共用池）</td>
+                <td class="num">6,000 分钟/人/月</td>
+                <td class="num">6,000 分钟/人/月</td>
+              </tr>
+              <tr>
+                <td class="rowhead">单场最长转录</td>
+                <td class="num"><strong>30 分钟</strong></td>
+                <td class="num">90 分钟</td>
+                <td class="num">4 小时</td>
+                <td class="num">4 小时</td>
+              </tr>
+              <tr>
+                <td class="rowhead">可导入文件数</td>
+                <td><strong>终身 3 个</strong></td>
+                <td class="num">10 个/月</td>
+                <td>不限</td>
+                <td>不限</td>
+              </tr>
+              <tr>
+                <td class="rowhead">会话历史</td>
+                <td><strong>仅最近 25 条</strong></td>
+                <td>不限</td>
+                <td>不限</td>
+                <td>不限</td>
+              </tr>
+              <tr>
+                <td class="rowhead">AI Chat 提问</td>
+                <td class="num">20 次/月（单会话 3 次）</td>
+                <td class="num">50 次/月</td>
+                <td class="num">200 次/月</td>
+                <td class="num">200 次/月</td>
+              </tr>
+              <tr>
+                <td class="rowhead">并发会议</td>
+                <td class="num">1</td>
+                <td class="num">2</td>
+                <td class="num">3</td>
+                <td class="num">3</td>
+              </tr>
+              <tr>
+                <td class="rowhead">自定义词库</td>
+                <td class="num">5 个词</td>
+                <td>团队 100 人名 + 100 词</td>
+                <td>团队 800 + 800</td>
+                <td>同 Business</td>
+              </tr>
+              <tr>
+                <td class="rowhead">导出格式</td>
+                <td>mp3、txt</td>
+                <td>+ pdf、docx、srt</td>
+                <td>+ 批量导出</td>
+                <td>+ 批量导出</td>
+              </tr>
+              <tr>
+                <td class="rowhead">播放倍速</td>
+                <td>仅 1×</td>
+                <td>0.5×–3×、跳过静音</td>
+                <td>同 Pro</td>
+                <td>同 Pro</td>
+              </tr>
+              <tr>
+                <td class="rowhead">工作区上限</td>
+                <td class="num">5 人</td>
+                <td class="num">5 个计费席位</td>
+                <td class="num">25 个计费席位</td>
+                <td>不限</td>
+              </tr>
+              <tr>
+                <td class="rowhead">自定义 AI 会议模板</td>
+                <td class="num">5 场/人</td>
+                <td class="num">15 场/人</td>
+                <td class="num">30 场/人</td>
+                <td>不限</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="cap">
+          Enterprise 独有：SSO / SCIM / 域名捕获（需 ≥100 席）、Otter API 与 Webhooks、自定义数据保留策略、HIPAA（加购）、Otter Sales Notetaker，以及与 Gmail / Drive / Notion / Jira 的 AI Chat。
+          学生教师优惠：Pro 打 8 折，年付 $79.99（$6.67/月），月付 $13.59。
+        </p>
+      </div>
+
+      <div class="stack">
+        <h3>额度规则的两个坑</h3>
+        <ul class="list">
+          <li>额度不结转，且<strong>删掉的会话仍然计入当月转录额度</strong>。</li>
+          <li>Basic 超 300 分钟后<strong>录音和导入会被直接停掉</strong>，必须等下个周期或升级。</li>
+          <li>Basic 单场超过 30 分钟不会停止录制，但<strong>只能看到前 30 分钟的转写</strong>；升级后点「Unlock full transcript」可解锁完整内容。</li>
+        </ul>
+      </div>
+
+      <div class="stack">
+        <h3>云端保存多久</h3>
+        <ul class="list">
+          <li><strong>默认永久。</strong>官方原文：无论升级、降级还是取消订阅，会话都留在账号里，只有你自己删除、注销账号或工作区管理员删号才会消失；归档的会话也不会在一段时间后被删除。</li>
+          <li>Basic 的限制是<strong>访问权而非保存期</strong>：超过 25 条的旧会话被归档（archived, not deleted），升级付费即可全部解锁；也可以导出加删除来腾出 25 条的位置。</li>
+          <li>有个连带效应：如果一条会话的<strong>所有者</strong>是免费版且已被归档，即便你是付费用户也看不了，只能点「Ask for access」请对方升级。</li>
+        </ul>
+
+        <h4 style="margin-top:8px;">自定义保留策略（仅 Enterprise，需联系客户经理开通）</h4>
+        <ul class="list">
+          <li>最短 24 小时，可按天／月／年设定，<strong>到期自动永久删除，任何人（含管理员）都无法恢复，也不进回收站</strong>。</li>
+          <li>可分别对「整场会话」／「仅音视频」／「仅转写文本」设置不同周期。</li>
+          <li>清理任务每天运行，<strong>保证在设定期限后 48 小时内删除</strong>。</li>
+        </ul>
+        <div class="note warn">
+          <b>一个不可逆的副作用：</b>转写文本被删除后<b>摘要无法再生成</b>——重新生成摘要依赖转写文本，一旦转写清空，摘要就永久失去了重建能力。
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="xunfei">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <h2><span class="brandmark" style="background:var(--xunfei)"></span>讯飞 P1 / P1 Pro：免费档最"实在"的一家</h2>
+      <p class="sec-sub">2026 年 6 月发布的海外机型，配套 App 为 Deepting（讯飞听见国际版）。免费档不阉割功能，只卡分钟数。</p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="stack">
+        <h3>硬件与订阅</h3>
+        <div class="plans cols-3">
+          <div class="plan hl-x">
+            <span class="pl-name">AI Recorder P1</span>
+            <span class="pl-price">$119</span>
+            <span class="pl-alt">22.5g · 可作手表/夹扣/挂绳佩戴</span>
+            <span class="pl-quota">面向学生与年轻用户</span>
+          </div>
+          <div class="plan hl-x">
+            <span class="pl-name">AI Recorder P1 Pro</span>
+            <span class="pl-price">$159</span>
+            <span class="pl-alt">55g · 曾促销 $139</span>
+            <span class="pl-quota">3.2" AMOLED、Hi-Res 96kHz/24bit、3 麦阵列、64GB</span>
+          </div>
+          <div class="plan hl-x">
+            <span class="pl-name">Deepting Pro 会员</span>
+            <span class="pl-price">≈$12.99 <small>/月</small></span>
+            <span class="pl-alt">官方标注 3 个月价值 $38.97</span>
+            <span class="pl-quota">2,100 转录分钟/月</span>
+          </div>
+        </div>
+        <div class="note warn">
+          <b>关于 $12.99 这个数字。</b>讯飞官网商店<b>没有公开会员的单独月价</b>，只在促销文案里写明「3-month Deepting Pro membership … Value: $38.97」。
+          $38.97 ÷ 3 = $12.99 是由此推算，不是官方标价。若要用于正式测算，建议以 App 内实际订阅页为准。
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>免费档给了什么（官网原文列举）</h3>
+        <ul class="list">
+          <li><strong>300 转录分钟/月</strong></li>
+          <li><strong>云存储不限量</strong>（unlimited cloud storage）</li>
+          <li>实时语音转文字、自动摘要、实时翻译</li>
+          <li>跨设备同步、说话人识别</li>
+          <li><strong>不限次导出</strong>、完整历史记录</li>
+        </ul>
+        <div class="note key">
+          <b>值得注意：</b>这是六款会议纪要产品里免费档<b>功能最完整</b>的之一——摘要、翻译、说话人识别、不限次导出全给，也不限制单条时长或历史条数。付费墙纯粹建在分钟数上，逻辑和 Plaud 一致，但它<b>不要求先买硬件才能用 App</b>。
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>能力与保存</h3>
+        <ul class="list">
+          <li>转写速度：1 小时音频约 5 分钟完成，官方称准确率最高 98%，支持说话人识别。</li>
+          <li>实时转写与翻译支持 <strong>11 种语言</strong>，响应最快 0.2 秒。</li>
+          <li>机身 64GB 可存约 700 小时音频；P1 Pro 连续录音 20 小时、待机 38 天。</li>
+          <li><strong>云端保存：官方标注不限量云存储</strong>，未见时间上限说明。</li>
+        </ul>
+        <div class="note">
+          <b>促销时效提醒：</b>官网 P1 页面写明的赠送活动是「June 8 – July 8，新购机赠 3 个月 Deepting Pro」，<b>该窗口已于调研日前结束</b>。另有渠道称延长至 8 月 31 日，未在官网求证到。购机前请以当时页面为准。
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="pocket">
+    <div class="sec-head">
+      <span class="sec-num">08</span>
+      <h2><span class="brandmark" style="background:var(--pocket)"></span>Pocket：唯一不用额度做付费墙的一家</h2>
+      <p class="sec-sub">把"不限量、终身、无强制订阅"直接写进营销主张，订阅只卖高级功能。这是六款会议纪要产品里最异类的定价结构。</p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="stack">
+        <h3>硬件与订阅</h3>
+        <div class="plans cols-2">
+          <div class="plan hl-k">
+            <span class="pl-name">Pocket 设备</span>
+            <span class="pl-price">$129</span>
+            <span class="pl-alt">发售特价，原价 $199</span>
+            <span class="pl-quota">52g · MagSafe 吸附 · 2 录音麦 + 1 接触麦 · 64GB · 4 天续航 · 120+ 语言</span>
+          </div>
+          <div class="plan hl-k">
+            <span class="pl-name">Pocket Pro 会员</span>
+            <span class="pl-price">$19.99 <small>/月</small></span>
+            <span class="pl-alt">年付约 $199–245</span>
+            <span class="pl-quota">解锁高级功能，<strong>不增加分钟数</strong>（免费档本就不限量）</span>
+          </div>
+        </div>
+        <p class="cap">
+          官方商店在本次访问中按香港区展示，实测价：设备 HK$1,029（原价 HK$1,589）；Pocket Pro 年付 HK$1,910 原价，促销 HK$1,589（17% off）或 HK$1,429（25% off）；半年档 HK$960 原价 / HK$629 促销。
+          月价 $19.99 已由官方社区管理员回复及应用内 Google Play 账单提示确认，非折算值；年付美元数为按汇率折算。
+        </p>
+      </div>
+
+      <div class="stack">
+        <h3>购机赠送：1 个月 Pocket Pro，到期自动扣费</h3>
+        <ul class="list">
+          <li>在 App 内激活新设备时，<strong>赠送 1 个月 Pocket Pro</strong> 全功能。</li>
+          <li>免费月结束后，<strong>自动转入 $19.99/月的订阅计划</strong>，需主动取消才不扣费。</li>
+          <li>另有推荐计划：每成功推荐 1 位好友注册，<strong>推荐人与被推荐人各得 1 个月 Pocket Pro</strong>。</li>
+        </ul>
+        <div class="note">
+          <b>来源层级说明：</b>这一节的信息来自 Pocket 官方社区中管理员的回复，以及用户贴出的 Google Play 账单提示截图
+          （「Your trial will end on … You will be automatically charged the subscription cost (currently $19.99/month)」），
+          <b>不是官网正式条款页</b>。可信度高于第三方转述，但低于官方文档，引用时请留意。
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>免费档 vs Pocket Pro</h3>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr><th style="width:34%"></th><th>免费（购机即含，终身）</th><th>Pocket Pro</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="rowhead">转录分钟</td><td><strong>不限量，终身</strong></td><td>同左（不因订阅增加）</td></tr>
+              <tr><td class="rowhead">基础 AI</td><td>转写、摘要、待办提取、思维导图</td><td>同左</td></tr>
+              <tr><td class="rowhead">说话人分离</td><td>—</td><td><strong>✓</strong></td></tr>
+              <tr><td class="rowhead">摘要模板</td><td>基础</td><td><strong>100+ 种风格，可自建不限量</strong></td></tr>
+              <tr><td class="rowhead">Ask Pocket 问答</td><td>受限</td><td><strong>不限量</strong></td></tr>
+              <tr><td class="rowhead">单条录音时长</td><td>受限</td><td><strong>最长 4 小时</strong></td></tr>
+              <tr><td class="rowhead">云端历史</td><td>受限</td><td><strong>不限量云端历史</strong></td></tr>
+              <tr><td class="rowhead">其他</td><td>—</td><td>AI 模型选择、批量导出/合并/删除、优先处理、新功能抢先体验</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note warn">
+          <b>一个没查到的关键数字。</b>官方把「不限量云端历史」列为 Pro 权益，这意味着<b>免费档的云端历史是有上限的</b>，但官网与文档均未公布具体条数或天数。
+          这一格我没能从官方源确认，标注为"受限"而非猜一个数。如果要做精确对标，需要实际注册账号验证。
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>云端保存多久</h3>
+        <ul class="list">
+          <li>机身 <strong>64GB 本地存储</strong>，可完全离线录音，联网后同步。</li>
+          <li>官网标注「64GB onboard + unlimited cloud」，但<strong>不限量云端历史需 Pro</strong>——免费档的实际保存上限未公开。</li>
+        </ul>
+        <div class="note">
+          <b>关于信息来源的一点说明。</b>Pocket 官网有一个署名"独立测评"的竞品对比页，实为自家营销页，其中对竞品的描述存在硬伤——例如把 Otter 免费版单场限制写成 40 分钟，而
+          Otter 官方帮助中心明确写的是 <b>30 分钟</b>。本文档只采用该页对 Pocket 自身的陈述，所有竞品数据仍以各自官方源为准。
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="anker">
+    <div class="sec-head">
+      <span class="sec-num">09</span>
+      <h2><span class="brandmark" style="background:var(--anker)"></span>安克 AI 录音豆：没有自己的会员，卖的是飞书的入口</h2>
+      <p class="sec-sub">2026 年 1 月 19 日由安克创新与飞书联合发布，¥899。与你的项目同名，是最直接的对标产品。</p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="note key">
+        <b>先说资格判定：这款产品没有独立的会员订阅体系。</b>它的 AI 能力完全由飞书妙记提供，用户用的是飞书账号、飞书的额度、飞书的存储。
+        之所以仍然收录，是因为它示范了一条清晰的商业路径——<b>硬件绑定赠送订阅额度，6 个月后自然转化为飞书 AI 会员付费用户</b>。这个结构本身值得研究。
+      </div>
+
+      <div class="stack">
+        <h3>绑定赠送权益（飞书官方帮助中心原文）</h3>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr><th style="width:26%">项目</th><th>内容</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="rowhead">赠送内容</td><td>每月额外 <strong class="num">1,200 分钟</strong>语音转文字 + <strong class="num">25 篇</strong>智能纪要额度</td></tr>
+              <tr><td class="rowhead">有效期</td><td>自<strong>首次绑定成功之日</strong>起 <strong>6 个月</strong>内</td></tr>
+              <tr><td class="rowhead">叠加规则</td><td>与飞书基础免费权益（300 分钟/月）<strong>叠加生效</strong>，即前 6 个月每月共 1,500 分钟</td></tr>
+              <tr><td class="rowhead">绑定关系</td><td>权益与所绑定设备关联，<strong>解绑设备则权益自动失效</strong></td></tr>
+              <tr><td class="rowhead">账号限制</td><td>账号与设备<strong>一对一绑定</strong>，同一账号仅支持绑定一台设备</td></tr>
+              <tr><td class="rowhead">到期之后</td><td>回落至飞书基础免费权益，需自行购买飞书 AI 会员（¥69/月起）获取更多额度</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>产品形态与能力</h3>
+        <ul class="list">
+          <li><strong>模块化设计：</strong>可拆卸麦克风 + 开放式充电舱，支持领夹、吊坠、手机背板（MagSafe 磁吸）三种佩戴方式，机身仅 10 克。</li>
+          <li><strong>核心功能：</strong>实时转写、AI 实时总结、智能纪要生成、知识问答；支持中英日 3 语自动识别、24 种语言实时翻译。</li>
+          <li><strong>标记重点：</strong>录音中双击麦克风可打点标记，AI 会自动总结各标记时刻附近内容，生成"我的笔记"文档。</li>
+          <li><strong>文件传输：</strong>默认蓝牙传输，也可切换 Wi-Fi 快传；<strong>传输完成后文件从设备删除</strong>以释放空间。麦克风电量低于 30% 时无法使用 Wi-Fi 传输。</li>
+          <li>续航约 1.5–8 小时（视电量），需飞书 V7.60 及以上版本。</li>
+        </ul>
+      </div>
+
+      <div class="stack">
+        <h3>云端保存多久</h3>
+        <p>与飞书妙记<strong>完全一致</strong>：妙记文件没有时间上限，但占用飞书「统一存储」配额（个人版 100 GB），存储满则无法生成新妙记；删除后进回收站保留 30 天。</p>
+        <div class="note warn">
+          <b>两处需要留意的风险点：</b>设备解绑后，<b>设备中未同步的文件将被清除</b>；且赠送权益随解绑立即失效，不可转移到另一台设备或另一个账号。
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="looki">
+    <div class="sec-head">
+      <span class="sec-num">10</span>
+      <h2><span class="brandmark" style="background:var(--looki)"></span>Looki L1：跨品类参照组</h2>
+      <p class="sec-sub">
+        AI 生活记录相机，不是会议纪要产品。列入调研是为了看一个<strong>相邻品类如何处理同样的订阅与存储问题</strong>，
+        它的答案和前六款有明显不同。
+      </p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="note warn">
+        <b>先说清楚品类差异，否则对比会误导。</b>Looki L1 是可穿戴 AI 影像记录设备，主打日常影像回顾、AI 自动生成 vlog、可搜索的"记忆"。
+        它<b>没有"转录分钟"这个计量单位</b>——计量的是存储容量和 AI 处理量。因此本报告中"免费额度 300 分钟"这类指标对它完全不适用，
+        速览表中该列已标注为"不按分钟计"。把它和 Plaud、讯飞放在同一行比较分钟数是没有意义的。
+      </div>
+
+      <div class="stack">
+        <h3>硬件与订阅</h3>
+        <div class="plans cols-3">
+          <div class="plan hl-l">
+            <span class="pl-name">Looki L1 设备</span>
+            <span class="pl-price">$199</span>
+            <span class="pl-alt">香港区官网实测 HK$1,993</span>
+            <span class="pl-quota">32g · IP67 · 32GB 机身存储 · 375mAh</span>
+          </div>
+          <div class="plan hl-l">
+            <span class="pl-name">Essential（免费档）</span>
+            <span class="pl-price">$0</span>
+            <span class="pl-alt">官方支持中心确认存在</span>
+            <span class="pl-quota">官方表述：含<strong>基础存储与 AI 能力</strong>；硬件为一次性投入，标准服务无强制订阅</span>
+          </div>
+          <div class="plan hl-l">
+            <span class="pl-name">Prime（最高档）</span>
+            <span class="pl-price">≈$10 <small>/月</small></span>
+            <span class="pl-alt">第三方评测口径，未获官方求证</span>
+            <span class="pl-quota">官方表述：解锁<strong>增强的 AI 能力</strong>，提供更多洞察与更大存储；购机赠 1 个月</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>官方可确认的部分</h3>
+        <p>以下来自 looki.ai 产品页 FAQ 与官方支持中心原文：</p>
+        <ul class="list">
+          <li>
+            <strong>目前没有强制订阅。</strong>官方 FAQ 原文：Looki 是一次性硬件投入，标准服务无强制订阅或隐藏费用；
+            并预告"随着社区扩大和存储基础设施扩容，<strong>未来可能推出可选的高级档</strong>"。
+          </li>
+          <li><strong>免费档名为 Essential</strong>，含基础存储与 AI 能力。</li>
+          <li>
+            <strong>存在一个 Infinity 档。</strong>官方保修条款提到"Infinity plan 订阅者可额外获得 6 个月延保"——
+            这说明档位体系比评测里说的 Essential / Elite / Prime 更复杂。
+          </li>
+          <li>
+            <strong>默认不上云。</strong>所有影像与音频先存本地，<strong>除非用户在 App 中主动选择同步，否则不会上传</strong>；
+            启用云端后数据加密存于 AWS，服务器位于用户所在国家或地区。
+          </li>
+          <li>设备与手机<strong>一对一配对</strong>，不支持同时连接两台手机。</li>
+          <li>录制时机身 Trust Light 会闪烁提示他人，<strong>该指示灯无法关闭</strong>。</li>
+          <li>官方承诺<strong>绝不使用用户数据训练 AI 模型</strong>。</li>
+        </ul>
+      </div>
+
+      <div class="stack">
+        <h3>AI 能力清单（官方支持中心「Looki AI」条目原文）</h3>
+        <p>
+          官方公开了 <strong>7 项 AI 能力</strong>的功能与价值描述。需要强调：
+          <em>这份清单是产品整体能力，官方没有说明哪几项属于免费档 Essential、哪几项需要付费档</em>。
+        </p>
+        <div class="scroll">
+          <table style="min-width:820px;">
+            <thead>
+              <tr><th style="width:6%">#</th><th style="width:22%">能力</th><th style="width:40%">功能</th><th style="width:32%">官方描述的价值</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num">1</td>
+                <td class="rowhead">多模态感知<br><span style="font-size:11.5px;color:var(--ink-3);">Multi-Modal Sensing</span></td>
+                <td>调用摄像头、<strong>三麦阵列</strong>与 IMU 检测光线、声音、运动，对场景分类（静止/动态、室内/室外）以决定何时拍摄</td>
+                <td>理解「什么值得记」，避免无意义录制，<strong>优化存储与剪辑开销</strong></td>
+              </tr>
+              <tr>
+                <td class="num">2</td>
+                <td class="rowhead">时刻归类<br><span style="font-size:11.5px;color:var(--ink-3);">Moments Organization</span></td>
+                <td>App 按时间线与场景自动把视频照片组织成主题片段，官方举例「Morning Coffee」「Pet Playtime」</td>
+                <td>跳过杂乱素材，打开 App 直接看当日高光</td>
+              </tr>
+              <tr>
+                <td class="num">3</td>
+                <td class="rowhead">AI 视频创作<br><span style="font-size:11.5px;color:var(--ink-3);">AI Video Creation</span></td>
+                <td>从 Moments 自动生成 <strong>30–60 秒</strong>高光片</td>
+                <td>一键可分享 vlog，无需剪辑技能</td>
+              </tr>
+              <tr>
+                <td class="num">4</td>
+                <td class="rowhead">AI 检索与回忆<br><span style="font-size:11.5px;color:var(--ink-3);">AI Search &amp; Recall</span></td>
+                <td>用关键词查找片段（官方举例「Wednesday dinner」「kids' smiles」），AI 汇总关键事件</td>
+                <td>像聊天一样调取记忆，不必拖进度条</td>
+              </tr>
+              <tr>
+                <td class="num">5</td>
+                <td class="rowhead">生活数据洞察<br><span style="font-size:11.5px;color:var(--ink-3);">Life Insights via Data</span></td>
+                <td>从日常视频中提取<strong>行为、情绪、活动数据</strong>，分析作息规律、社交模式与情绪趋势</td>
+                <td>发现隐藏习惯，用周期性总结与建议可视化变化</td>
+              </tr>
+              <tr>
+                <td class="num">6</td>
+                <td class="rowhead">意外之美捕捉<br><span style="font-size:11.5px;color:var(--ink-3);">Surprise Moment Detection</span></td>
+                <td>AI 标记可能被忽略的「计划外的美好」——微笑、日落、人际互动</td>
+                <td>每日推送「惊喜片段」</td>
+              </tr>
+              <tr>
+                <td class="num">7</td>
+                <td class="rowhead">创意内容生成<br><span style="font-size:11.5px;color:var(--ink-3);">Creative Content Generation</span></td>
+                <td>把原始素材生成风格化视频、海报等，针对社交平台优化</td>
+                <td>一键出片，自动配乐、字幕与封面</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="takeaway">
+    <div class="sec-head">
+      <span class="sec-num">11</span>
+      <h2>横向结论</h2>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="stack">
+        <h3>1 · 300 分钟是行业基准线，但含金量差别极大</h3>
+        <p>六款会议纪要产品里有四款把免费额度定在 300 分钟/月。可这 300 分钟能干什么，差得很远：</p>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr><th style="width:20%">产品</th><th style="width:13%">免费档慷慨度</th><th>实际能得到什么</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowhead"><span class="chip k">Pocket</span></td>
+                <td>不设限</td>
+                <td><strong>不限量转写 + 核心 AI，终身免费</strong>。付费墙建在功能上而非额度上，六款会议纪要产品里唯一</td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip x">讯飞 P1 Pro</span></td>
+                <td>很慷慨</td>
+                <td>300 分钟内摘要、翻译、说话人识别、<strong>不限次导出、不限量云存储</strong>全给，不限单条时长与历史条数</td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip p">Plaud</span></td>
+                <td>很慷慨</td>
+                <td><strong>功能零阉割</strong>，连 Ask Plaud、AutoFlow、MCP、HIPAA 合规都给，代价是必须先买硬件</td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip a">安克录音豆</span></td>
+                <td>前期慷慨</td>
+                <td>前 6 个月每月 1,500 分钟 + 25 篇纪要，<strong>到期断崖式回落至 300 分钟</strong></td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip f">飞书妙记</span></td>
+                <td>居中</td>
+                <td>只保证「出文字」，<strong>AI 纪要要另外扣点数</strong>，免费用户拿不到稳定的 AI 额度</td>
+              </tr>
+              <tr>
+                <td class="rowhead"><span class="chip o">Otter.ai</span></td>
+                <td>最紧</td>
+                <td>额外叠加单场 30 分钟截断、终身 3 次导入、25 条历史、5 个词库、1× 倍速、仅 mp3/txt 导出——<strong>用多维度限制把免费版做成了纯试用</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>2 · 六款会议纪要产品没有一款用「N 天后删除」卡免费用户</h3>
+        <p>这是本次调研最一致的发现。云端保存全都不设时间上限，卡点各不相同：</p>
+        <ul class="list">
+          <li><span class="chip p">Plaud</span>、<span class="chip x">讯飞</span> 云存储不限量且免费，<strong>真·无限期</strong>。</li>
+          <li><span class="chip f">飞书妙记</span>、<span class="chip a">安克录音豆</span> 时间无限但<strong>空间有限</strong>（个人版 100 GB），存满即无法生成新妙记。</li>
+          <li><span class="chip o">Otter.ai</span> 时间无限但<strong>可见性有限</strong>（免费仅 25 条），旧的锁在归档里当升级钩子。</li>
+          <li><span class="chip k">Pocket</span> 「不限量云端历史」是 Pro 权益，<strong>免费档的实际上限未公开</strong>。</li>
+        </ul>
+      </div>
+
+      <div class="stack">
+        <h3>3 · 定价带已经形成事实标准</h3>
+        <p>
+          Plaud Pro 与 Otter Pro 同为 $8.33/月年付、同为 1,200 分钟；Plaud Unlimited、Otter Business、Pocket Pro 三家同为 $19.99/月。
+          <em>年付 ~$100/年 与 ~$240/年这两个价格带，已经是这个品类的默认答案。</em>飞书折算后落在同一区间，讯飞的 ≈$12.99 卡在两档之间。
+        </p>
+      </div>
+
+      <div class="stack">
+        <h3>4 · 「买硬件送会员」已是标配，但送的东西根本不是一回事</h3>
+        <p>
+          五款硬件产品<strong>无一例外</strong>都提供购机赠送或试用——连相邻品类的 Looki L1 也不例外，不送反而会成为竞争劣势。
+          但赠送时长跨度极大，<em>从 Plaud 的 7 天到安克的 6 个月，相差 26 倍</em>，且机制分成两类：
+        </p>
+        <ul class="list">
+          <li>
+            <strong>试用转化型（Plaud 7 天、Pocket 1 个月）：</strong>时长短，<strong>到期自动扣款</strong>。
+            本质是用免费期换支付授权，转化率高，但要求用户主动取消。Plaud 还叠加了 72 小时领取窗口，逾期时长砍半。
+          </li>
+          <li>
+            <strong>权益赠送型（讯飞 3 个月、安克 6 个月）：</strong>时长长，<strong>到期不自动扣费</strong>，只回落免费档。
+            把赠送期当体验期而非付费漏斗，用户心理负担低，但转化需要另做动作。
+          </li>
+        </ul>
+        <div class="note key">
+          <b>对定价设计的含义：</b>这两条路线的差别不在慷慨程度，而在<b>你打算在什么时候要用户的支付信息</b>。
+          试用型在开箱当天就要，赠送型把这件事推迟到半年后。前者现金流来得快，后者换取的是更低的差评率和更真实的留存信号。
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>5 · 硬件定价也在收敛到 $119–199</h3>
+        <div class="scroll">
+          <table>
+            <thead><tr><th style="width:30%">产品</th><th>硬件价</th><th>订阅是否必需</th></tr></thead>
+            <tbody>
+              <tr><td class="rowhead"><span class="chip x">讯飞 P1</span></td><td class="num">$119</td><td>否，免费档功能完整</td></tr>
+              <tr><td class="rowhead"><span class="chip k">Pocket</span></td><td class="num">$129（原价 $199）</td><td><strong>否，官方主打无强制订阅</strong></td></tr>
+              <tr><td class="rowhead"><span class="chip x">讯飞 P1 Pro</span></td><td class="num">$159</td><td>否</td></tr>
+              <tr><td class="rowhead"><span class="chip p">Plaud Note</span></td><td class="num">$159</td><td>重度使用需订阅</td></tr>
+              <tr><td class="rowhead"><span class="chip a">安克 AI 录音豆</span></td><td class="num">¥899（≈$125）</td><td>前 6 个月不需要，之后需要</td></tr>
+              <tr><td class="rowhead"><span class="chip l">Looki L1</span><span style="font-size:11.5px;color:var(--ink-3);"> 参照组</span></td><td class="num">$199</td><td>官方称目前无强制订阅</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="stack">
+        <h3>6 · 对 AI 录音豆的直接启示</h3>
+        <ul class="list">
+          <li>
+            <strong>安克那款是最该逐条拆解的对标。</strong>同名、同形态、同价位带，且它证明了一条路径：硬件不自建 AI，直接绑定飞书，用 6 个月赠送额度换取到期后的订阅转化。
+            <strong>6 个月也是五款里最长的赠送期</strong>，配合"不自动扣费"，是五款中对用户最友好的一套。
+            风险点也很清楚——<strong>权益绑死设备、解绑即失效、账号一对一</strong>，这是把用户锁在硬件上的强约束，口碑代价需要评估。
+          </li>
+          <li>
+            <strong>Pocket 提出了一个反直觉但值得认真对待的问题：转写额度到底该不该做付费墙。</strong>
+            它把不限量转写作为硬件的一部分卖掉，订阅只卖说话人分离、模板库、长录音、AI 问答。
+            如果转写成本可控，这个结构对用户口碑极其友好，且把订阅价值锚定在真正有边际成本的 AI 功能上。
+          </li>
+          <li>
+            <strong>飞书的「ASR 分钟 + AI 点数」双计量是唯一把转录成本和大模型成本分开计价的。</strong>
+            好处是 AI 功能升级时不用重构套餐；坏处是用户认知负担重——很多人不知道自己 300 分钟里的纪要还要扣点。
+          </li>
+          <li>
+            <strong>讯飞证明了「免费档功能完整 + 只卡分钟」不需要硬件门槛。</strong>Plaud 也这么做，但必须先买设备；讯飞的 App 免费档独立可用，获客成本更低。
+          </li>
+          <li>
+            <strong>云端保存不要做成时间限制。</strong>六款会议纪要产品无一例外。录音是用户资产，删除的负面感知远大于收益。
+            用空间配额（飞书）或可见条数（Otter）来卡，是更被市场接受的做法。
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section class="sec" id="sources">
+    <div class="sec-head">
+      <span class="sec-num">12</span>
+      <h2>信息来源</h2>
+      <p class="sec-sub">以 2026-08-07 当日抓取的官方页面原文为主。少数无法从官方求证的数字已在正文中逐条标注。</p>
+    </div>
+
+    <ul class="srcs">
+      <li class="s-grp">Plaud</li>
+      <li><a href="https://www.plaud.ai/pages/plaud-ai-plan-pricing">Plaud AI Plan Pricing（定价与功能对比表）</a></li>
+      <li><a href="https://support.plaud.ai/hc/en-us/articles/50742099278617-Comparison">Plaud Support — Comparison</a></li>
+      <li><a href="https://support.plaud.ai/hc/en-us/articles/57724862694937-Plaud-AI-Membership-FAQ">Plaud Support — AI Membership FAQ</a></li>
+      <li><a href="https://support.plaud.ai/hc/en-us/articles/51820671018265-Private-Cloud-Sync">Plaud Support — Private Cloud Sync</a></li>
+      <li><a href="https://support.plaud.ai/hc/en-us/articles/57744166222489-Plaud-s-security-and-compliance">Plaud Support — Security and compliance（数据保留）</a></li>
+      <li><a href="https://support.plaud.ai/hc/en-us/articles/50777048340889-Try-before-you-buy">Plaud Support — Try before you buy（7 天试用与 72 小时窗口）</a></li>
+      <li><a href="https://www.plaud.ai/collections/all">Plaud Shop（订阅与加油包实际售价）</a></li>
+
+      <li class="s-grp">飞书妙记</li>
+      <li><a href="https://www.feishu.cn/new-announcement/pricing-adjustment2024">飞书公告 — 聊天记录存储时长、妙记语音转文字和 API 使用规则说明</a></li>
+      <li><a href="https://www.feishu.cn/announcement/pricing-adjustment2024">飞书公告 — 存储空间、视频会议使用规则和价格调整说明</a></li>
+      <li><a href="https://www.feishu.cn/service/ai/landing">飞书 AI 会员定价页</a></li>
+      <li><a href="https://www.feishu.cn/hc/zh-CN/articles/234159142166">飞书帮助 — 自助购买飞书 AI 会员</a></li>
+      <li><a href="https://www.feishu.cn/hc/zh-CN/articles/082024280492">飞书帮助 — AI 会员权益消耗规则说明</a></li>
+      <li><a href="https://www.feishu.cn/hc/zh-CN/articles/808156011479">飞书帮助 — 智能纪要用量额度说明</a></li>
+      <li><a href="https://www.feishu.cn/hc/zh-CN/articles/518067879872">飞书帮助 — 个人账号权益调整与付费升级</a></li>
+      <li><a href="https://www.feishu.cn/hc/zh-CN/articles/836314366029">飞书帮助 — 删除、移除妙记</a></li>
+
+      <li class="s-grp">Otter.ai</li>
+      <li><a href="https://otter.ai/pricing">Otter.ai Pricing（完整功能对比表）</a></li>
+      <li><a href="https://help.otter.ai/hc/en-us/articles/360047538094-Conversation-import-and-app-limits-on-the-Basic-free-plan">Otter Help — Basic 免费版的会话、导入与应用限制</a></li>
+      <li><a href="https://help.otter.ai/hc/en-us/articles/26011568967447-Will-I-still-have-access-to-my-conversations-if-I-cancel-downgrade-or-change-plans">Otter Help — 取消／降级后会话是否仍可访问</a></li>
+      <li><a href="https://help.otter.ai/hc/en-us/articles/19500988656279-Set-a-custom-Data-Retention-policy">Otter Help — 设置自定义数据保留策略</a></li>
+
+      <li class="s-grp">讯飞 P1 / P1 Pro</li>
+      <li><a href="https://store.iflytek.com/products/iflytek-ai-recorder-p1">iFLYTEK Global Store — AI Recorder P1（含 App 免费权益与 Pro 赠送说明）</a></li>
+      <li><a href="https://store.iflytek.com/products/iflytek-ai-recorder-p1-pro">iFLYTEK Global Store — AI Recorder P1 Pro</a></li>
+      <li><a href="https://www.accessnewswire.com/newsroom/en/industrial-and-manufacturing/iflytek-unveils-ai-recorders-p1-and-p1-pro-redefining-smart-voice-capt-1177232">iFLYTEK 官方新闻稿 — P1 与 P1 Pro 发布</a></li>
+
+      <li class="s-grp">Pocket</li>
+      <li><a href="https://heypocket.com/pages/home4-pricing">Pocket 官网 — 产品与定价页</a></li>
+      <li><a href="https://heypocket.com/products/pocket-pro-12-month-access-to-pocket-s-full-power-17-off">Pocket 官方商店 — Pocket Pro 年度订阅（权益清单与实测价）</a></li>
+      <li><a href="https://docs.heypocketai.com/docs/plans/pocket-pro">Pocket Docs — Pocket Pro 权益说明</a></li>
+      <li><a href="https://heypocket.com/pages/comparison">Pocket 官网 — 竞品对比页（自家营销内容，仅采信其对自身的陈述）</a></li>
+      <li><a href="https://community.heypocket.com/t/got-my-pocket-subscription/149">Pocket 官方社区 — 1 个月试用与 $19.99/月自动扣费（管理员回复）</a></li>
+      <li><a href="https://community.heypocket.com/t/introducing-pocket-referrals-free-pocket-pro-no-limits/1439">Pocket 官方社区 — 推荐计划：双方各得 1 个月 Pro</a></li>
+
+      <li class="s-grp">安克 AI 录音豆</li>
+      <li><a href="https://www.feishu.cn/hc/zh-CN/articles/445044627145">飞书帮助中心 — 安克 AI 录音豆产品使用说明（赠送权益官方原文）</a></li>
+      <li><a href="https://www.feishu.cn/content/article/7597268954498763996">飞书官网 — 飞书 × 安克创新 AI 录音豆</a></li>
+      <li><a href="https://www.qbitai.com/2026/01/370245.html">量子位 — 安克创新与飞书联合发布安克 AI 录音豆（发布日期与售价）</a></li>
+
+      <li class="s-grp">Looki L1 · 参照组</li>
+      <li><a href="https://www.looki.ai/products/looki-l1">Looki 官网 — Looki L1 产品页与 FAQ（"无强制订阅"原文）</a></li>
+      <li><a href="https://support.looki.ai/hc/en-001/articles/49659915480217-General-FAQs">Looki 支持中心 — General FAQs（Essential 免费档、本地优先存储）</a></li>
+      <li><a href="https://support.looki.ai/hc/en-001">Looki 支持中心 — Looki AI 条目（7 项 AI 能力完整清单）</a></li>
+      <li><a href="https://techspective.net/2026/04/15/looki-l1-review-a-wearable-ai-camera-that-captures-more-than-it-understands/">TechSpective 评测 — $199 售价与赠送 1 个月 Prime</a></li>
+      <li><a href="https://www.seriousinsights.net/looki-l1-review/">Serious Insights 评测 — 档位结构与赠送 1 个月 Prime</a></li>
+    </ul>
+    <p class="cap" style="margin-top:18px;">
+      来源可信度分三级：<strong>官方文档</strong>（各官网定价页、帮助中心）为最高，本报告绝大多数数字属此级；
+      <strong>官方社区</strong>（Pocket 的 1 个月试用与自动扣费）次之；<strong>第三方评测</strong>（Looki 的档位与价格）最低，已在正文逐条标注。
+    </p>
+  </section>
+
+  <footer>
+    竞品调研 · Plaud / 飞书妙记 / Otter.ai / 讯飞 P1 Pro / Pocket / 安克 AI 录音豆 / Looki L1（参照组）　|　调研日期 2026-08-07　|　为 AI 录音豆套餐设计提供参考<br>
+    价格与额度以各官网当日展示为准。飞书 AI 会员官方标注为内测中；Plaud Team 首年优惠于 2026-08-31 截止；讯飞购机赠会员活动官网标注窗口为 6/8–7/8，已结束。
+    讯飞 Deepting Pro 月价为推算值，已在正文标注推算依据；Looki L1 的档位与价格未能从官方渠道求证，仅供参考，不建议直接引用。
+  </footer>
+
+</div>
+
+</body>
+</html>
