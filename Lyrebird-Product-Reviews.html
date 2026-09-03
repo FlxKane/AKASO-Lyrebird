@@ -667,7 +667,7 @@ footer .conf{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1p
     </div>
 
     <div class="pos-grid">
-      <div class="deep reveal in" data-wm="LYREBIRD">
+      <div class="deep reveal" data-wm="LYREBIRD">
         <div class="eyebrow">CLAIM · 营销主张</div>
         <h3>琴鸟把<span class="mk">看见的、听见的</span>，<br>都变成<span class="mk">记得住的</span>。</h3>
         <p>纯音频录音豆只留下声音；琴鸟在录音的同时以 <b>1 fps</b> 留存画面，让"当时在场的样子"跟着话一起被记下来。</p>
@@ -685,18 +685,18 @@ footer .conf{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1p
           <div class="pc-k">采集侧 · Capture</div>
           <div class="pc-v">音频 + 1fps 全景视觉<small>单麦录音 + 205° 超广角 1fps 抽帧；支持手动抓拍与短视频</small></div>
         </div>
-        <div class="pos-card bl reveal in">
+        <div class="pos-card bl reveal">
           <div class="pc-k">输出侧 · Output</div>
           <div class="pc-v">双版式图文纪要<small>工作类（决策 / 任务项 / 思维导图）· 生活类（散文叙事 / 情绪标签）</small></div>
         </div>
-        <div class="pos-card gr reveal in">
+        <div class="pos-card gr reveal">
           <div class="pc-k">沉淀侧 · Knowledge</div>
           <div class="pc-v">知识库 + AI 问答<small>跨纪要检索、RAG 问答、回答附引用可跳回原文</small></div>
         </div>
       </div>
     </div>
 
-    <div class="blocklab reveal in">这个产品到底怎么用 · <b>四步闭环</b></div>
+    <div class="blocklab reveal">这个产品到底怎么用 · <b>四步闭环</b></div>
     <div class="flow4 stagger reveal in">
       <div class="fstep">
         <div class="fn">Step 01 · 采集</div>
@@ -1520,7 +1520,7 @@ footer .conf{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1p
       <div class="deep cost-main reveal in" data-wm="¥">
         <div class="eyebrow">HARDWARE BOM · 硬件 BOM 成本</div>
         <div class="cv"><span class="cur">¥</span>205 – 278</div>
-        <div class="cnote">主芯片 · Sensor · 镜头 · EMMC · PCBA<br>区间由<b>存储方案</b>决定：NAND+TF(32G) <b>¥205</b> → EMMC 8G <b>¥278</b><br>全套（含配件与彩盒）预计 <b>¥246 – 317</b>；不含开模、结构件材料与组装</div>
+        <div class="cnote">主芯片 · Sensor · 镜头 · EMMC · PCBA<br>区间由<b>存储方案</b>决定：NAND+TF(32G) <b>¥205</b> → EMMC 8G <b>¥278</b><br>全套（配件 / 结构件 / 组装 / 彩盒）预计 <b>¥294 – 367</b>，含赠送订阅 <b>¥304 – 392</b><br>以上均为<b>预估价</b>，不含开模费</div>
       </div>
       <div class="cost-meta">
         <div class="cm reveal in"><div class="k">AI Token · 每 15 分钟</div><div class="v">¥1.62 / ¥2.16<small>Gemini 3.5 Flash / 3.1 Pro · 实测 15 分钟会议场景总结消耗 0.1M Token</small></div></div>
@@ -1544,17 +1544,17 @@ footer .conf{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1p
       </div>
       <div class="pending reveal in">
         <div class="pt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>02 · 结构费用</div>
-        <div class="ps">TBD · 待 ID 定版后估算</div>
-        <div class="pp">外观三方向尚未收敛，结构方案未定，以下三项<b>暂无法估算</b>，需在 ID 定版后由结构同步补齐。这是当前整机成本的最大不确定项。</div>
+        <div class="ps">预估价 · 开模费待估</div>
+        <div class="pp">结构件材料费与组装费已有<b>预估值</b>；<b>开模费</b>需在 ID 定版、结构方案确定后才能报出，是当前整机成本的最大不确定项。</div>
         <ul class="plist">
           <li>开模费<span>—</span></li>
-          <li>结构件材料费<span>—</span></li>
-          <li>组装<span>—</span></li>
+          <li>结构件材料费<span>预计¥27</span></li>
+          <li>组装费<span>预计¥23</span></li>
         </ul>
       </div>
     </div>
 
-    <div class="blocklab reveal in">03 · <b>全套产品成本预估</b> ｜ 主体 + 配件 + 包材</div>
+    <div class="blocklab reveal in">03 · <b>全套产品成本预估</b> ｜ 主体 + 配件 + 结构 + 包材 ｜ <b>全部为预估价</b></div>
     <div class="tbl-scroll reveal in">
       <table class="dt">
         <thead><tr><th>组成</th><th>说明</th><th class="r">预估成本</th></tr></thead>
@@ -1564,8 +1564,14 @@ footer .conf{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1p
           <tr><td class="nm">充电仓</td><td>含 1300 mAh 电池 + 支架结构</td><td class="r"><span class="tv">¥26</span></td></tr>
           <tr><td class="nm">磁吸背夹</td><td>佩戴配件</td><td class="r"><span class="tv">¥3</span></td></tr>
           <tr><td class="nm">挂绳</td><td>佩戴配件</td><td class="r"><span class="tv">¥2</span></td></tr>
+          <tr><td class="nm">结构件材料费</td><td>结构件用料</td><td class="r"><span class="tv">¥27</span></td></tr>
+          <tr><td class="nm">组装费</td><td>整机组装</td><td class="r"><span class="tv">¥23</span></td></tr>
           <tr><td class="nm">包装彩盒</td><td>零售包装</td><td class="r"><span class="tv">¥6</span></td></tr>
-          <tr class="total"><td class="nm">全套成本</td><td>主体 + 配件 + 包材（<b>不含</b>开模、结构件材料与组装）</td><td class="r"><span class="gd">¥244 – 317</span></td></tr>
+          <tr><td class="nm">赠送订阅成本</td><td>购机赠送，两档方案二选一</td><td class="r"><span class="tv">¥10</span>（7 天）／<span class="tv">¥25</span>（30 天）</td></tr>
+          <tr class="total"><td class="nm">全套成本</td><td>主体 + 配件 + 结构件 + 组装 + 包材</td><td class="r"><span class="gd">¥294 – 367</span></td></tr>
+          <tr class="total"><td class="nm">全套成本 · 含 7 天订阅</td><td>主体 + 配件 + 结构件 + 组装 + 包材 + 7 天订阅</td><td class="r"><span class="gd">¥304 – 377</span></td></tr>
+          <tr class="total"><td class="nm">全套成本 · 含 30 天订阅</td><td>主体 + 配件 + 结构件 + 组装 + 包材 + 30 天订阅</td><td class="r"><span class="gd">¥319 – 392</span></td></tr>
+          <tr><td colspan="3" style="font-size:12.5px;color:var(--ink-3);line-height:1.7">以上<b style="color:var(--gold-2)">全部为预估价</b>（ESTIMATED），最终以供应商报价与 ID 定版后的结构方案为准；<b>均不含开模费</b>。区间下限对应 NAND+TF(32G)、上限对应 EMMC 8G。</td></tr>
         </tbody>
       </table>
     </div>
